@@ -1,0 +1,457 @@
+1. MERGE SORT
+	
+	public class MergeSort {
+
+    public static void mergeSort(int[] array) {
+        if (array.length > 1) {
+            int mid = array.length / 2;
+            int[] left = Arrays.copyOfRange(array, 0, mid);
+            int[] right = Arrays.copyOfRange(array, mid, array.length);
+            mergeSort(left);
+            mergeSort(right);
+            merge(array, left, right);
+        }
+    }
+
+    public static void merge(int[] array, int[] left, int[] right) {
+        int i = 0, j = 0, k = 0;
+        while (i < left.length && j < right.length) {
+            if (left[i] < right[j]) {
+                array[k++] = left[i++];
+            } else {
+                array[k++] = right[j++];
+            }
+        }
+        while (i < left.length) {
+            array[k++] = left[i++];
+        }
+        while (j < right.length) {
+            array[k++] = right[j++];
+        }
+    }
+}
+
+
+2. SELECTION SORT
+
+	public class SelectionSort {
+
+    public static void selectionSort(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            int temp = array[minIndex];
+            array[minIndex] = array[i];
+            array[i] = temp;
+        }
+    }
+}
+
+
+3. INSERTION SORT
+
+	public class InsertionSort {
+
+    public static void sort(int[] array) {
+        for (int i = 1; i < array.length; i++) {
+            int key = array[i];
+            int j = i - 1;
+            while (j >= 0 && array[j] > key) {
+                array[j + 1] = array[j];
+                j--;
+            }
+            array[j + 1] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] array = {5, 2, 9, 1, 5, 6};
+        sort(array);
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+    }
+}
+
+
+4. BUBBLE SORT
+
+	public class BubbleSort {
+
+    public static void sort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (array[j] > array[j+1])
+                {
+                    int temp = array[j];
+                    array[j] = array[j+1];
+                    array[j+1] = temp;
+                }
+    }
+
+    public static void main(String[] args) {
+        int[] array = {5, 2, 9, 1, 5, 6};
+        sort(array);
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+    }
+}
+
+
+5. IMPLEMENTATION OF STACK
+
+	class Stack {
+    int top = -1;
+    int[] stack = new int[100];
+
+    public void push(int value) {
+        if (top == 99) {
+            System.out.println("Stack overflow");
+        } else {
+            top++;
+            stack[top] = value;
+        }
+    }
+
+    
+    public int pop() {
+        if (top == -1) {
+            System.out.println("Stack underflow");
+            return -1;
+        } else {
+            int value = stack[top];
+            top--;
+            return value;
+        }
+    }
+
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    public int peek() {
+        if (top == -1) {
+            System.out.println("Stack is empty");
+            return -1;
+        } else {
+            return stack[top];
+        }
+    }
+
+    public static void main(String[] args) {
+        Stack stack = new Stack();
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        System.out.println("Popped element: " + stack.pop());
+        System.out.println("Popped element: " + stack.pop());
+        System.out.println("Top element: " + stack.peek());
+    }
+}
+
+
+6. IMPLEMENTATION OF QUEUE
+
+	class Queue {
+    int front = 0, rear = -1;
+    int[] queue = new int[100];
+
+    public void enqueue(int value) {
+        if (rear == 99) {
+            System.out.println("Queue overflow");
+        } else {
+            queue[++rear] = value;
+        }
+    }
+
+    public int dequeue() {
+        if (front > rear) {
+            System.out.println("Queue underflow");
+            return -1;
+        } else {
+            return queue[front++];
+        }
+    }
+
+    public boolean isEmpty() {
+        return front > rear;
+    }
+
+    public int peek() {
+        if (front > rear) {
+            System.out.println("Queue is empty");
+            return -1;
+        } else {
+            return queue[front];
+        }
+    }
+
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        System.out.println("Dequeued element: " + queue.dequeue());
+        System.out.println("Dequeued element: " + queue.dequeue());
+        System.out.println("Front element: " + queue.peek());
+    }
+}
+
+
+7. SINGLE LINKED LIST
+
+	class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    public void append(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = new Node(data);
+    }
+
+    public void prepend(int data) {
+        Node newHead = new Node(data);
+        newHead.next = head;
+        head = newHead;
+    }
+
+    public void deleteWithValue(int data) {
+        if (head == null) return;
+        if (head.data == data) {
+            head = head.next;
+            return;
+        }
+        Node current = head;
+        while (current.next != null) {
+            if (current.next.data == data) {
+                current.next = current.next.next;
+                return;
+            }
+            current = current.next;
+        }
+    }
+
+    public void printList() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.prepend(0);
+        list.deleteWithValue(2);
+        list.printList();
+    }
+}
+
+
+8. DOUBLE LINKED LIST
+
+	class Node {
+    int data;
+    Node next;
+    Node prev;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+    Node tail;
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (tail == null) {
+            head = tail = newNode;
+            return;
+        }
+        tail.next = newNode;
+        newNode.prev = tail;
+        tail = newNode;
+    }
+
+    public void prepend(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = tail = newNode;
+            return;
+        }
+        newNode.next = head;
+        head.prev = newNode;
+        head = newNode;
+    }
+
+    public void delete(Node node) {
+        if (head == null) return;
+        if (head == node) {
+            head = head.next;
+            head.prev = null;
+            return;
+        }
+        if (tail == node) {
+            tail = tail.prev;
+            tail.next = null;
+            return;
+        }
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    public void printList() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " <-> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.prepend(0);
+        list.delete(list.head.next);
+        list.printList();
+    }
+}
+
+9. QUICK SORT
+
+	class QuickSort {
+
+    public static void sort(int[] array, int low, int high) {
+        if (low < high) {
+            int partitionIndex = partition(array, low, high);
+
+            sort(array, low, partitionIndex);
+            sort(array, partitionIndex + 1, high);
+        }
+    }
+
+    public static int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (array[j] <= pivot) {
+                i++;
+
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        int temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+
+        return i + 1;
+    }
+
+    public static void main(String[] args) {
+        int[] array = {5, 2, 9, 1, 5, 6};
+        sort(array, 0, array.length - 1);
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+    }
+}
+
+
+10. HEAP SORT
+
+	class HeapSort {
+
+    public static void sort(int[] array) {
+        int n = array.length;
+
+        
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(array, n, i);
+        }
+
+        
+        for (int i = n - 1; i >= 0; i--) {
+            
+            int temp = array[0];
+            array[0] = array[i];
+            array[i] = temp;
+
+            
+            heapify(array, i, 0);
+        }
+    }
+
+   
+   
+    public static void heapify(int[] array, int n, int i) {
+        int largest = i;  
+        int left = 2 * i + 1;  
+        int right = 2 * i + 2; 
+
+        
+        if (left < n && array[left] > array[largest]) {
+            largest = left;
+        }
+
+       
+        if (right < n && array[right] > array[largest]) {
+            largest = right;
+        }
+
+       
+        if (largest != i) {
+            int swap = array[i];
+            array[i] = array[largest];
+            array[largest] = swap;
+
+          
+            heapify(array, n, largest);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] array = {5, 2, 9, 1, 5, 6};
+        sort(array);
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+    }
+}
+
+	
